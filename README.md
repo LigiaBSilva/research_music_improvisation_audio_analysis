@@ -103,7 +103,7 @@ The notebook included in this repository focuses primarily on exploratory analys
 
 ## 5. Audio Feature Extraction
 
-Audio analysis was conducted in a separate notebook dedicated to feature extraction.
+Audio analysis was conducted in a separate notebook dedicated to feature extraction. Recordings are not included here due to large size and more than 100 recordings... May be requested for research purposes, contact author
 
 The objective was to investigate whether acoustic properties of musical improvisations were associated with musicians' perception of duration.
 
