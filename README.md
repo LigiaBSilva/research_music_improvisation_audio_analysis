@@ -1,94 +1,167 @@
-# research_music_improvisation_audio_analysis
-Audio features extraction (BPM, beat confidence), as part of data analysis for an empirical experiment on music improvisation, mental states and time perception
-
-# Musical Improvisation, Audio Features & Time Perception
-
-## Overview
-
-This is a small part of data analysis from an experiment exploring how different improvisational contexts influence mental states and subjective time perception. Several measures were collected, such as duration estimates, ratings of attentional focus, perceived difficulty, emotional engagement etc..
 
 
-In this part of the analysis we investigated whether acoustic properties of music being created during improvisations were associated with musicians’ perception of duration.
+# Music Improvisation, Time Perception & Audio Analysis
 
-
-A key hypothesis explored during this analysis was that measurable audio features—such as tempo and beat salience—may help explain variations in perceived duration.
+This repository contains the data analysis pipeline for an empirical study investigating how **musical improvisation influences musicians' perception of time**, and whether these effects are associated with **objective audio features** extracted from musical performances.
 
 ---
 
-## Research Question
+# Research Question
 
-Does musical improvisation influence musicians’ perception of time, and are these effects associated with objective audio features extracted from the performances?
-
----
-
-## Experimental Design
-
-Participants completed improvisation tasks under different conditions:
-
-- **musical setting: Solo vs Group
-- **improvisation task:
-  - A: Familiar harmony
-  - B: Unfamiliar harmony
-  - C: Free improvisation
-
-Each participant completed 6 tasks.
-
-For each task, we collected:
-- Audio recordings of improvisations
-- Self-reported measures (time perception, enjoyment, difficulty, etc.)
+**Does musical improvisation influence musicians' perception of time, and are these effects associated with objective audio features extracted from the performances?**
 
 ---
 
-## Data Processing Pipeline
+# Experimental Design
 
-The analysis pipeline includes the following steps:
+Participants completed improvisation tasks under different experimental conditions.
 
-### 1. Data Loading
-Participant response data was loaded from CSV format, containing metadata for each improvisation task.
+## Independent Variables
 
-### 2. Audio Path Construction
-For each row in the dataset:
-- Experimental condition metadata was extracted
-- A corresponding file path to the audio recording was constructed dynamically
-- These paths were stored as a new column in the dataset
+| Factor             | Levels                                                                            |
+| ------------------ | --------------------------------------------------------------------------------- |
+| Musical Setting    | Solo / Group                                                                      |
+| Improvisation Task | **A:** Familiar harmony<br>**B:** Unfamiliar harmony<br>**C:** Free improvisation |
 
-### 3. Audio Feature Extraction
-Audio files were processed using **Essentia**, extracting features including:
-- Estimated tempo (BPM)
-- Beat salience / beat confidence
-
-Extracted features were stored as new variables for statistical analysis.
+Each participant completed **six improvisation tasks**.
 
 ---
 
-## Statistical Analysis
+## Data Collected
 
-To assess relationships between conditions and extracted features, we applied:
+For each improvisation task, the following data were collected:
 
-- Independent t-tests
-- One-way ANOVAs
+* Audio recordings of the improvisations
+* Self-reported measures, including:
 
-(Full analysis in the original study also included linear mixed-effects models, though only simpler tests are shown in this notebook version.)
-
----
-
-## Key Findings
-
-- Beat confidence varied significantly across experimental conditions
-- BPM did not significantly differ across conditions
-- Neither BPM nor beat confidence significantly predicted time estimation
+  * Time estimation
+  * Perceived speed of time passage
+  * Mental States: fluctuations in attentional demand and focus
+  * Enjoyment
+  * Difficulty
+  * Familiarity
+* Demographic information
 
 ---
 
-## Tools & Libraries
+# Project Structure
 
-- Python
-- pandas
-- numpy
-- scipy
-- statsmodels
-- Essentia (audio feature extraction)
+```text
+music-improvisation-time-perception-analysis/
+│
+├── README.md
+│
+├── data/
+│── raw/
+│    ├── improv_time_results_base.csv
+│    ├── improv_time_demographic_public.csv
+│    └── recordings/
+│  
+│
+└── notebooks/
+    ├── 01_etl_and_time_analysis.ipynb
+    └── 02_audio_feature_analysis.ipynb
+ 
+
 
 ---
 
-## Project Structure
+# Analysis Pipeline
+
+## 1. Data Loading
+
+Participant responses were imported from CSV files containing metadata for each improvisation task.
+
+## 2. ETL (Extract, Transform, Load)
+
+The dataset was cleaned by:
+
+* Removing incomplete observations
+* Verifying data types
+* Renaming variables for consistency
+* Removing irrelevant variables
+
+## 3. Data Preparation
+
+Additional variables were created to facilitate statistical analysis, including:
+
+* Relative time estimation measures
+* Merging demographic information
+* Saving the cleaned dataset
+* Exploring potential outliers
+
+## 4. Statistical Analysis
+
+Relationships between experimental conditions and psychological measures were investigated using:
+
+* Pearson correlations
+* Independent-samples t-tests
+* One-way ANOVAs
+* Linear mixed-effects models (LMM)
+
+The notebook included in this repository focuses primarily on exploratory analyses and classical statistical tests. The complete linear mixed-effects models were conducted during the final stage of the research and are not fully reproduced here.
+
+## 5. Audio Feature Extraction
+
+Audio analysis was conducted in a separate notebook dedicated to feature extraction.
+
+The objective was to investigate whether acoustic properties of musical improvisations were associated with musicians' perception of duration.
+
+Audio files were processed using **Essentia**, extracting:
+
+* Estimated tempo (BPM)
+* Beat confidence (beat salience)
+
+For each observation:
+
+* Experimental metadata were used to construct the corresponding audio file path.
+* Audio features were extracted automatically.
+* Extracted features were added to the dataset for subsequent statistical analyses.
+
+Differences in audio features across improvisation conditions were examined using:
+
+* Independent-samples t-tests
+* One-way ANOVAs
+
+These variables were later incorporated into linear mixed-effects models, which are not included in this repository.
+
+---
+
+# Main Findings
+
+The principal findings of the study were:
+
+* Estimated duration differed between **solo** and **group** improvisation.
+* Differences in duration estimation were **not explained** by the collected psychological or acoustic measures.
+* The perceived speed of time passage was associated with **enjoyment** and **mind wandering**, and differed between free and structured improvisation tasks.
+* **Beat confidence** varied significantly across some experimental conditions, suggesting differences in the stability of the musical pulse.
+* **Tempo (BPM)** did not differ significantly between experimental conditions.
+* Neither **tempo** nor **beat confidence** significantly predicted participants' time estimation.
+
+---
+
+# Technologies
+
+* Python
+* pandas
+* NumPy
+* SciPy
+* statsmodels
+* Essentia
+* Jupyter Notebook
+
+---
+
+# Repository Contents
+
+| Notebook                            | Description                                                                            |
+| ----------------------------------- | -------------------------------------------------------------------------------------- |
+| **01_etl_and_time_analysis.ipynb**  | Data cleaning, preprocessing, and statistical analyses of questionnaire data           |
+| **02_audio_feature_analysis.ipynb** | Audio feature extraction using Essentia and statistical analysis of acoustic variables |
+
+---
+
+# Citation
+
+If you use this repository in academic work, please cite the corresponding publication or contact the author for citation details.
+
